@@ -10,10 +10,11 @@ on:
         - info
         - warning
         - debug
-      tags:
-        description: 'Test scenario tags'
-        required: false
-        type: boolean
+      backboneName:
+        description: 'Name of Clusters to Delete'
+	required: true
+	type: string
+
 
 jobs:
   log-the-inputs:
@@ -21,7 +22,7 @@ jobs:
     steps:
       - run: |
           echo "Log level: $LEVEL"
-          echo "Tags: $TAGS"
+          echo "Backbone Name: $BACKBONE_NAME"
         env:
           LEVEL: ${{ inputs.logLevel }}
-          TAGS: ${{ inputs.tags }}
+          BACKBONE_NAME: ${{ inputs.backboneName }}
