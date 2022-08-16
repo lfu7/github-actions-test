@@ -1,4 +1,6 @@
 on:
+  push: 
+    branches: [master]
   workflow_dispatch:
     inputs:
       logLevel:
@@ -18,11 +20,14 @@ on:
 
 jobs:
   log-the-inputs:
+    name: "logging the inputs"
     runs-on: ubuntu-latest
     steps:
+      - name: Set Branch Name
+        run: echo "BRANCH_NAME=$(echo ${GITHUb_REF#/refs/heads} | tr /-)" >> $GITHUB_ENV
+
+      - name: Override Branch Name
+        if: "${{ github.event.inputs.backboneName != '' }}"
+        run: echo "BRANCH_NAME=${{ inputs.backboneName }}" >> $GITHUB_ENV
       - run: |
-          echo "Log level: $LEVEL"
-          echo "Backbone Name: $BACKBONE_NAME"
-        env:
-          LEVEL: ${{ inputs.logLevel }}
-          BACKBONE_NAME: ${{ inputs.backboneName }}
+          echo "${{ env.BRANCH_NAME }}"
