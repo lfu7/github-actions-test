@@ -12,8 +12,8 @@ on:
         - debug
       backboneName:
         description: 'Name of Clusters to Delete'
-	      required: true
-	      type: string
+        required: true
+        type: string
 
 
 jobs:
