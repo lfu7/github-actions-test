@@ -30,6 +30,6 @@ jobs:
         if: "${{ github.event.inputs.backboneName != '' }}"
         run: echo "BRANCH_NAME=${{ inputs.backboneName }}" >> $GITHUB_ENV
       - name: Echo Branch Name
-        run: |
-          echo "${{ env.BRANCH_NAME }}"
-	        echo "testing"
+        run: echo "${{ env.BRANCH_NAME }}"
+      - name: Test
+        run: echo "testing"
