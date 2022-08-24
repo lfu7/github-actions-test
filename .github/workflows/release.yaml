@@ -1,22 +1,6 @@
 on:
-  push: 
-    branches: [master]
-  workflow_dispatch:
-    inputs:
-      logLevel:
-        description: 'Log level'
-        required: true
-        default: 'warning'
-        type: choice
-        options:
-        - info
-        - warning
-        - debug
-      backboneName:
-        description: 'Name of Clusters to Delete'
-        required: true
-        type: string
-
+  release:
+    types: [published]
 
 jobs:
   log-the-inputs:
