@@ -1,19 +1,16 @@
+name: My Workflow
+
 on:
   release:
-    types: [published]
-
+    types: [ published ]
 jobs:
-  log-the-inputs:
-    name: "logging the inputs"
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set Branch Name
-        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#/refs/heads/} | tr / -)" >> $GITHUB_ENV
+  my-job:
+    runs-on: [ my-runner ]
 
-      - name: Override Branch Name
-        if: "${{ github.event.inputs.backboneName != '' }}"
-        run: echo "BRANCH_NAME=${{ inputs.backboneName }}" >> $GITHUB_ENV
-      - name: Echo Branch Name
-        run: echo "${{ env.BRANCH_NAME }}"
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+       
       - name: Test
-        run: echo "testing"
+        run: |
+          echo "test"
