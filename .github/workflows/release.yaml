@@ -4,7 +4,6 @@ on:
 
 jobs:
   release-project:
-    name: "Uploading Release to Github"
     runs-on: ubuntu-latest
     steps:
       - name: Get Release Version
