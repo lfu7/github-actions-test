@@ -1,22 +1,35 @@
 on:
-  release:
-    types: [published]
+  push: 
+    branches: [master]
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+        type: choice
+        options:
+        - info
+        - warning
+        - debug
+      backboneName:
+        description: 'Name of Clusters to Delete'
+        required: true
+        type: string
+
 
 jobs:
-  release-project:
-  runs-on: ubuntu-latest
-  steps:
-    - name: Get Release Version
-      if: github.event_name == 'release'
-      run: |
-        echo "VERSION=$(echo ${GITHUB_REF#refs/*/} | sed 's/^.*v//')" >> $GITHUB_ENV
+  log-the-inputs:
+    name: "logging the inputs"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set Branch Name
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#/refs/heads/} | tr / -)" >> $GITHUB_ENV
 
-    - name: Upload Release Asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        upload_url: ${{ github.event.release.upload_url }}
-        asset_path: "${GITHUB_WORKSPACE}/ttcs-agent_${{ env.VERSION }}_amd64.deb"
-        asset_name: "ttcs-agent_${{ env.VERSION }}_amd64.deb"
-        asset_content_type: application/vnd.debian.binary-package
+      - name: Override Branch Name
+        if: "${{ github.event.inputs.backboneName != '' }}"
+        run: echo "BRANCH_NAME=${{ inputs.backboneName }}" >> $GITHUB_ENV
+      - name: Echo Branch Name
+        run: echo "${{ env.BRANCH_NAME }}"
+      - name: Test
+        run: echo "testing"
