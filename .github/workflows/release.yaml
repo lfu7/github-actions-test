@@ -4,7 +4,8 @@ on:
 
 jobs:
   release-project:
-    runs-on: ubuntu-20.04
+    name: "Uploading Release to Github"
+    runs-on: ubuntu-latest
     steps:
       - name: Get Release Version
         if: github.event_name == 'release'
