@@ -6,7 +6,7 @@ on:
 
 jobs:
   my-job:
-    runs-on: [ my-runner ]
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout repo
