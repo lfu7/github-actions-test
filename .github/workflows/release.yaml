@@ -4,11 +4,12 @@ on:
 
 jobs:
   release-project:
+    runs-on: ubuntu-20.04
     steps:
       - name: Get Release Version
         if: github.event_name == 'release'
         run: |
-          echo "VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
+          echo "VERSION=$(echo ${GITHUB_REF#refs/*/} | sed 's/^.*v//')" >> $GITHUB_ENV
 
       - name: Upload Release Asset
         uses: actions/upload-release-asset@v1
