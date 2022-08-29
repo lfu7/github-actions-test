@@ -11,7 +11,7 @@ jobs:
       - name: Get Release Version
         if: github.event_name == 'release'
         run: |
-          echo "RELEASE_FOLDER=files/" >> $GITHUB_ENV
+          echo "RELEASE_FOLDER=files/*" >> $GITHUB_ENV
       - name: Truncate Release URL
         run: |
           echo "RELEASE_URL=$(echo "${{ github.event.release.upload_url }}" | sed 's/{.*//' )" >> $GITHUB_ENV
