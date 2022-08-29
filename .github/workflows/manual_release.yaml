@@ -21,6 +21,9 @@ jobs:
           for FILE in ${{ env.RELEASE_FOLDER }}
           do
             ASSET_NAME=$(basename $FILE)
+            echo $ASSET_NAME
+            CONTENT_TYPE=$(file -b --mime-type $FILE)
+            echo $CONTENT_TYPE
             curl \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Content-Type": $(file -b --mime-type $FILE) \
