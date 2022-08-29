@@ -13,8 +13,11 @@ jobs:
         run: |
           echo "RELEASE_VERSION=${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
           echo "RELEASE_VERSION_TEST=2" >> $GITHUB_ENV
-          echo "${{ env.RELEASE_VERSION_TEST }}"
           echo "RELEASE_FOLDER=files/*" >> $GITHUB_ENV
+
+      - name: Echo Release
+        run: |
+          echo "${{ env.RELEASE_VERSION_TEST }}"
 
       - uses: mxschmitt/action-tmate@v3
 
