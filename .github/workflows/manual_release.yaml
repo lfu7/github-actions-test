@@ -12,14 +12,18 @@ jobs:
         if: github.event_name == 'release'
         run: |
           echo "RELEASE_FOLDER=files" >> $GITHUB_ENV
-          
+      - name: Truncate Release URL
+        run: |
+          echo "RELEASE_URL=$(echo ${{ github.event.release.upload_url }} | sed 's/{.*//' )" >> $GITHUB_ENV
+
       - name: Upload all the files in TTCS Release to Github
         run: |
           for FILE in ${{ env.RELEASE_FOLDER }}
           do
+            ASSET_NAME=$(basename $FILE)
             curl \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               -H "Content-Type": $(file -b --mime-type $FILE) \
               --data-binary @$FILE \
-              ${{ github.event.release.upload_url }}
+              "${{ env.RELEASE_URL }}?name=$ASSET_NAME"
           done 
