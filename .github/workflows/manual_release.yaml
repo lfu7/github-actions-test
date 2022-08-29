@@ -1,0 +1,25 @@
+on:
+  release:
+    types: [published]
+
+jobs:
+  build:
+    name: TTCS Release Build and Upload
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Get Release Version
+        if: github.event_name == 'release'
+        run: |
+          echo "RELEASE_FOLDER=files" >> $GITHUB_ENV
+          
+      - name: Upload all the files in TTCS Release to Github
+        run: |
+          for FILE in ${{ env.RELEASE_FOLDER }}
+          do
+            curl \
+              -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+              -H "Content-Type": $(file -b --mime-type $FILE) \
+              --data-binary @$FILE \
+              ${{ github.event.release.upload_url }}
+          done 
