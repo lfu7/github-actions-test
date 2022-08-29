@@ -17,6 +17,7 @@ jobs:
 
       - name: Echo Release
         run: |
+          echo "${{ env.RELEASE_VERSION }}"
           echo "${{ env.RELEASE_VERSION_TEST }}"
 
       - uses: mxschmitt/action-tmate@v3
