@@ -26,7 +26,7 @@ jobs:
             echo $CONTENT_TYPE
             curl \
               -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-              -H "Content-Type": $(file -b --mime-type $FILE) \
+              -H "Content-Type":$CONTENT_TYPE \
               --data-binary @$FILE \
               "${{ env.RELEASE_URL }}?name=$ASSET_NAME"
           done 
