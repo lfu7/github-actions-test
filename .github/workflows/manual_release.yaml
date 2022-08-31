@@ -1,6 +1,6 @@
 on:
   release:
-    types: [preleased]
+    types: [released]
 
 jobs:
   build:
