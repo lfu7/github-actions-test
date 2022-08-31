@@ -20,8 +20,6 @@ jobs:
           echo "${{ env.RELEASE_VERSION }}"
           echo "${{ env.RELEASE_VERSION_TEST }}"
 
-      - uses: mxschmitt/action-tmate@v3
-
       - name: Truncate Release URL
         run: |
           echo "RELEASE_URL=$(echo "${{ github.event.release.upload_url }}" | sed 's/{.*//' )" >> $GITHUB_ENV
